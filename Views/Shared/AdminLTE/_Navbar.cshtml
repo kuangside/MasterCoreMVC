@@ -1,0 +1,71 @@
+<!-- navbar -->
+<nav class="main-header navbar navbar-expand navbar-ligth py-0 pl-0">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link sidebar-toggle" data-widget="pushmenu" href="#" role="button"><i
+                    class="bi bi-list h5"></i></a>
+        </li>
+    </ul>
+
+
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+
+
+        <li class="nav-item" can="[ms.superadmin]">
+            <a class="nav-link" href="http://localhost/masterapp/updateversiongit" title="Update Git Pull"
+                role="button">
+                <i class="bi bi-git"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="javascript:void(reloadCententAjax(window.location.href))" title="รีโหลดหน้าใหม่"
+                role="button">
+                <i class="bi bi-bootstrap-reboot"></i>
+            </a>
+        </li>
+
+        <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <img src="/masterapp/images/favicon.png" class="user-image img-circle elevation-2" alt="User Image">
+                <span class="d-none d-md-inline">ผู้ดูแลระบบสูงสุด</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header">
+                    <img src="/masterapp/images/favicon.png" class="img-circle elevation-2" alt="User Image">
+
+                    <p>
+                        ผู้ดูแลระบบสูงสุด
+                        <small>
+                            -- . --
+                        </small>
+                    </p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                    <div class="row">
+                        <div class="col-12 small text-left">
+                            บทบาท: SuperAdmin, Admin
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer justify-content-between">
+                    <a href="http://localhost/masterapp/profile" class="btn btn-default btn-flat text-info"
+                        title="ดูข้อมูล"> <i class="bi bi-info-circle"></i> <span class="small">โปรไฟล์</span></a>
+                    <a href="javascript:void(0)" onclick="$('#modal-resetpassword').modal('show');"
+                        class="btn btn-default btn-flat text-orange" title="เปลียนรหัสผ่าน"> <i class="bi bi-key"></i>
+                        <span class="small">รหัสผ่าน</span></a>
+                    <a href="javascript:void(0)" onclick="$('#form-logout').submit();"
+                        class="btn btn-default btn-flat float-right" title="ออกจากระบบ"> <i
+                            class="bi bi-box-arrow-right"></i> <span class="small">ล๊อคเอ้า</span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<!-- /.navbar -->
