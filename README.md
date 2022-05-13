@@ -98,3 +98,7 @@ mix.copy('node_modules/sortablejs/Sortable.min.js','wwwroot/js');
 <!-- ---------------------------------------------------- -->
 [] npm run prod
 <!-- ------------------------------------------- -->
+
+https://stackoverflow.com/questions/67111332/asp-net-core-creating-custom-input-tag-helper
+
+https://stackoverflow.com/questions/34282640/how-can-i-pass-string-value-for-asp-for-in-asp-net-5
