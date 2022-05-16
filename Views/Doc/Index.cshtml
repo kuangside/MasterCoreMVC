@@ -69,11 +69,11 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
-                        <formitem asp-for="TestString" col="col-md-6" type="date" label="xxxx" show-label="true" 
-                            id="form-TestString3" Name="TestString3" value="xxx3" class="" 
+                        <formitem type="date" label="xxxx" show-label="true" col="col-md-6"  
+                            asp-for="TestString" id="form-TestString" Name="TestString" value="xxx3" class="text-danger" 
                             icon="" inline="false"  form-group="true" select2="false" required="true" autocomplete="off" />
 
-                        <formitem col="col-md-6" type="date" label="xxxx" show-label="true" 
+                        <formitem col="col-md-6" type="text" label="xxxx" show-label="true" 
                             id="form-TestString3" Name="TestString3" value="xxx3" class="" 
                             icon="bi bi-star" inline="false"  form-group="true" select2="false" required="true" readonly="true" autocomplete="off" />
 
