@@ -152,6 +152,7 @@ var _helper = {
         $('[data-mask]').inputmask();
 
         $('.form-loading').on('submit', function(el) {
+            try { if(!$(el.target).valid()) return false; } catch (error) { }            
             if($(el.target).has('.modal').length){
                 _helper.loading($(el.target).find('.modal'), 10000);
             }else{
@@ -310,6 +311,7 @@ var _helper = {
         $(el + ' [data-mask]').inputmask()
 
         $(el + ' .form-loading').on('submit', function(el) {
+            try { if(!$(el.target).valid()) return false; } catch (error) { }
             _helper.loading(el.target, 10000);
             $(el.target).find('.ajax-loading').eq(0).css('position', 'fixed');
         });
@@ -389,8 +391,8 @@ var _helper = {
             }
             let tokenInput = document.createElement("input");
             tokenInput.type = "hidden";
-            tokenInput.name = '_token';
-            tokenInput.value = $('meta[name=csrf-token]').attr('content');
+            tokenInput.name = '__RequestVerificationToken';
+            tokenInput.value = $('input[name=__RequestVerificationToken]').first().val();
             mapForm.appendChild(tokenInput);
 
             document.body.appendChild(mapForm);
@@ -486,7 +488,7 @@ function alertBox2(status, message, title, subtitle, delay) {
         icon = "bi bi-exclamation-octagon-fill";
     }
     subtitle = subtitle ? subtitle  : '';
-    delay = delay ? Number(delay) : 3000;
+    delay = delay ? Number(delay) : 4000;
 
     $(document).Toasts('create', {
         class: 'bg-'+status,
@@ -903,6 +905,7 @@ function tooltipInit() {
 
                 //set data to FormData
                 const helperform = $(e.target)[0];
+                try { if(!helperform.valid()) return false; } catch (error) { }
                 let formData = null;
                 if (_method == 'get' || _method == 'GET') {
                     _url = _url + '?' + $(helperform).serialize();
@@ -914,8 +917,9 @@ function tooltipInit() {
                         formData.append($(item).attr('name'), $(item)[0].files[0]); // add file to FormData
                     });
                 }
-
+                
                 _helper.loading(targetName + ($(e.target).has('.form-loading').length ? ' .form-loading' : ''));
+                
                 //send ajax to server
                 axios({
                         method: _method,

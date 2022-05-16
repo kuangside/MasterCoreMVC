@@ -1,3 +1,4 @@
+@model List<Breadcrumb>;
 <!-- Content Header (Page header) -->
 <section id="content-header" class="content-header">
     <div class="container-fluid">
@@ -9,12 +10,18 @@
                 </div>
                 <nav class="head-breadcrumb px-3 d-inline-block mb-2" aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item">
-                            <a href="http://localhost/masterapp/home" class=""><i
-                                    class="bi bi-pie-chart-fill"></i> ภาพรวม</a>
-                        </li>
-                        <li class="breadcrumb-item active"> <i class="bi bi-filetype-doc"></i>
-                            ตัวอย่างการใช้งาน</li>
+                        @foreach (var item in @Model)
+                        {
+                            <li can="@item.Can" class="breadcrumb-item">
+                                @if(item.Active){
+                                    <i class="@item.Icon"></i> @item.Name
+                                }else{ 
+                                    <a href="@item.Link" class="@item.Class" @(String.IsNullOrEmpty(@item.Target) ? "" : Html.Raw($"target='{@item.Target}'"))>
+                                        <i class="@item.Icon"></i> @item.Name
+                                    </a>
+                                }
+                            </li>
+                        }
                     </ol>
                 </nav>
             </div>

@@ -1,3 +1,5 @@
 @{
     Layout = "_Layout";
+    ViewData["IconApp"] = Url.Content("~" +(ViewData["IconApp"] ?? "/images/favicon.png").ToString());
+    ViewData["Breadcrumb"] = new List<Breadcrumb>();
 }

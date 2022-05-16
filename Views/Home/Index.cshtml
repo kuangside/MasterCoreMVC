@@ -1,8 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout="AdminLTE/_Layout";
+    ViewData["Title"] = "ตัวอย่าง";
+    ViewData["MenuActive"] = new string[]{ "" };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=true
+        }
+    };
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    @Html.HelloWorldHTMLString()
+
 </div>
+
+
+@section Scripts {
+<script>
+
+</script>
+}
+
+@section Styles {
+
+}

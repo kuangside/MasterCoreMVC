@@ -1,0 +1,52 @@
+@* @{
+    FormInput input = ViewData["FormInput"] as FormInput;
+
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var stringChars = new char[4];
+    var random = new Random();
+
+    for (int i = 0; i < stringChars.Length; i++)
+    {
+        stringChars[i] = chars[random.Next(chars.Length)];
+    }
+
+    var _id = input.Id ?? new String(stringChars);
+
+    string [] group1 = {
+        "text", "number", "email", "password", "date", "month", "time", "rangedate", "file"
+    };
+
+}
+
+<div class="@input.Col">
+    <div class="@(input.FormGroup ? "form-group" : "") has-error">
+        @if(input.ShowLabel && input.Inline == false){
+            <label for="@_id" class="control-label">
+                <i class="bi bi-exclamation-circle"></i>
+                <span class="text-danger required-text">*</span> @input.Label :
+            </label>
+        }
+         
+        @(!string.IsNullOrEmpty(input.Icon)  || input.Inline){
+            <div class="input-group input-group-inline">
+        }
+        @if(input.ShowLabel && input.Inline){
+            <label for="@_id" class="input-group-append form-item-inline">
+                <i class="bi bi-exclamation-circle"></i>
+                <span class="text-danger required-text">*</span> @input.Label :
+            </label>
+        }
+        <input type="text" class="form-control @(input.Inline ? "form-control-inline" : "") @input.Class" id="@_id" asp-for="@input.Name" placeholder="@input.Label" @Html.Raw(input.Attr_text) Required="@input.Required">
+            @if(!string.IsNullOrEmpty(input.Icon)){
+                <label for="@_id" class="mb-0 input-group-append">
+                    <div class="input-group-text">
+                        <i class="@input.Icon"></i>
+                    </div>
+                </label>
+            }
+            @(!string.IsNullOrEmpty(input.Icon)  || input.Inline){
+                </div>
+            } 
+            <span asp-validation-for="input.Name" class="help-block"></span>
+    </div>
+</div> *@

@@ -14,7 +14,7 @@
 [] config Startup.cs
 
 [] npm install --save-dev laravel-mix postcss
-[] npm install axios lodash @popperjs/core admin-lte bootstrap-icons datatables.net datatables.net-bs floatthead font-awesome glightbox inputmask jquery jquery-equal-height moment select2 signature_pad sortablejs sweetalert2 underscore vue flatpickr
+[] npm install axios lodash @popperjs/core admin-lte bootstrap-icons datatables.net datatables.net-bs floatthead font-awesome glightbox inputmask jquery jquery-equal-height moment select2 signature_pad sortablejs sweetalert2 underscore vue flatpickr jquery-validation jquery-validation-unobtrusive jquery-ajax-unobtrusive
 [] copy folder resources
 [] create webpack.mix.js
 

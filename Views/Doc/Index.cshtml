@@ -1,8 +1,20 @@
+@model MasterCoreMVC.ViewModels.DocumentModel
 @{
     Layout="AdminLTE/_Layout";
     ViewData["Title"] = "ตัวอย่าง";
     ViewData["MenuActive"] = new string[]{ "" };
-    ViewData["Breadcrumb"] = "";
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-doc",
+            Link = @Url.Action("Index", "Doc"), Name = "Document",
+            Class = "", Target="", Active=true
+        }
+    };
 }
 
 <div class="row">
@@ -39,6 +51,8 @@
             <div class="card-header ">
                 <h3 class="card-title">DETAIL</h3>
 
+                
+
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"
                         title="Collapse">
@@ -48,8 +62,35 @@
 
                 </div>
             </div>
-            <div class="card-body  iT3KpL1gOC" style="">
-                <h1>Form Item</h1>
+            <div class="card-body ">
+                
+                
+                <form asp-action="Create">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <formitem asp-for="TestString" col="col-md-6" type="date" label="xxxx" show-label="true" 
+                            id="form-TestString3" Name="TestString3" value="xxx3" class="" 
+                            icon="" inline="false"  form-group="true" select2="false" required="true" autocomplete="off" />
+
+                        <formitem col="col-md-6" type="date" label="xxxx" show-label="true" 
+                            id="form-TestString3" Name="TestString3" value="xxx3" class="" 
+                            icon="bi bi-star" inline="false"  form-group="true" select2="false" required="true" readonly="true" autocomplete="off" />
+
+                        <my-first-tag-helper id="my-input" type="text" placeholder="type anything you want" autocomplete="off" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default"/>
+                    </div>
+                </form>
+
+                <form asp-action="Create">
+                    <input asp-for="TestString" add-on-button="" add-on-button-text="" add-on-button-icon="" add-on-append="true" />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default"/>
+                    </div>
+                </form>
+
             </div>
         </div>
 

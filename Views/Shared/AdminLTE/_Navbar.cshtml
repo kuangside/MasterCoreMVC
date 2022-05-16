@@ -14,28 +14,16 @@
     <ul class="navbar-nav ml-auto">
 
 
-        <li class="nav-item" can="[ms.superadmin]">
-            <a class="nav-link" href="http://localhost/masterapp/updateversiongit" title="Update Git Pull"
-                role="button">
-                <i class="bi bi-git"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="javascript:void(reloadCententAjax(window.location.href))" title="รีโหลดหน้าใหม่"
-                role="button">
-                <i class="bi bi-bootstrap-reboot"></i>
-            </a>
-        </li>
 
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <img src="/masterapp/images/favicon.png" class="user-image img-circle elevation-2" alt="User Image">
+                <img src="@ViewBag.IconApp" class="user-image img-circle elevation-2" alt="User Image">
                 <span class="d-none d-md-inline">ผู้ดูแลระบบสูงสุด</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->
                 <li class="user-header">
-                    <img src="/masterapp/images/favicon.png" class="img-circle elevation-2" alt="User Image">
+                    <img src="@ViewBag.IconApp" class="img-circle elevation-2" alt="User Image">
 
                     <p>
                         ผู้ดูแลระบบสูงสุด
@@ -55,7 +43,7 @@
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer justify-content-between">
-                    <a href="http://localhost/masterapp/profile" class="btn btn-default btn-flat text-info"
+                    <a href="#" class="btn btn-default btn-flat text-info"
                         title="ดูข้อมูล"> <i class="bi bi-info-circle"></i> <span class="small">โปรไฟล์</span></a>
                     <a href="javascript:void(0)" onclick="$('#modal-resetpassword').modal('show');"
                         class="btn btn-default btn-flat text-orange" title="เปลียนรหัสผ่าน"> <i class="bi bi-key"></i>
