@@ -62,10 +62,11 @@ CKEDITOR.editorConfig = function(config) {
     config.removePlugins = 'easyimage,simage,emoji,cloudservices';
 
     var burl = document.querySelector('meta[name=homepage]').getAttribute("content").replace('/home', '');
-    var moduleName = document.querySelector('meta[name=moduleName]').getAttribute("content");
-    var _token = document.querySelector('meta[name=csrf-token]').getAttribute("content");
-    let moduleNamePath = (moduleName && moduleName != "home") ? "/"+moduleName : "";
-    config.filebrowserUploadUrl = burl + '/ckupload'+ moduleNamePath +'?_token=' + _token;
+    // var moduleName = document.querySelector('meta[name=moduleName]').getAttribute("content");
+    var _token = document.querySelector('input[name=__RequestVerificationToken]').value;
+    // let moduleNamePath = (moduleName && moduleName != "home") ? "/"+moduleName : "";
+    // config.filebrowserUploadUrl = burl + '/ckupload'+ moduleNamePath +'?_token=' + _token;
+    config.filebrowserUploadUrl = burl + '/ckupload?_token=' + _token;
     config.filebrowserUploadMethod = 'form';
     config.image_removeLinkByEmptyURL = true;
     config.image_previewText = CKEDITOR.tools.repeat('ตัวอย่างรูปภาพ ', 100);

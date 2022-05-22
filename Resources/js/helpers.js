@@ -26,6 +26,16 @@ var datatable_language_default = {
         "sSortDescending": ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย"
     }
 }
+
+var genBtnClearAndToDay = function (id){
+    return `
+        <div class="d-flex">
+        <button class="btn btn-default btn-xs w-100" onclick="$('#${id}').val('').trigger('change')"> Clear </buttom>
+        <button class="btn btn-default btn-xs w-100" onclick="$('#${id}').val(moment().format('YYYY-MM-DD hh:mm')).trigger('change')"> ToDay </buttom>
+        </div>
+    `;
+}
+
 var _datatable_language = typeof(datatable_language) !== 'undefined' ? datatable_language : datatable_language_default;
 // window.CKEDITOR_BASEPATH = document.querySelector('meta[name=homepage]').getAttribute("content").replace('/home', '') + '/js/ckeditor/';
 
@@ -75,7 +85,12 @@ var _helper = {
                 minDate:item.dataset.minDate ?? '',
                 maxDate:item.dataset.maxDate ?? '',
                 enableTime: false,
-                dateFormat: "d-m-Y"
+                dateFormat: "d-m-Y",
+                onReady: function(selectedDates, dateStr, instance){
+                    // $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    // $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
         // # datetimepicker
@@ -86,7 +101,12 @@ var _helper = {
                 maxDate:item.dataset.maxDate ?? '',
                 enableTime: true,
                 dateFormat: "d-m-Y H:i",
-                time_24hr: true
+                time_24hr: true,
+                onReady: function(selectedDates, dateStr, instance){
+                    // $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    // $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
         // # daterangepicker
@@ -98,7 +118,12 @@ var _helper = {
                 maxDate:item.dataset.maxDate ?? '',
                 enableTime: false,
                 dateFormat: "d-m-Y",
-                time_24hr: true
+                time_24hr: true,
+                onReady: function(selectedDates, dateStr, instance){
+                    // $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    // $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
 
             });
         })
@@ -111,7 +136,12 @@ var _helper = {
                 dateFormat: "H:i",
                 minTime: item.dataset.minTime,
                 maxTime: item.dataset.maxTime,
-                time_24hr: true
+                time_24hr: true,
+                onReady: function(selectedDates, dateStr, instance){
+                    // $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    // $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
 
@@ -126,9 +156,34 @@ var _helper = {
                       altFormat: "F Y", //defaults to "F Y"
                       theme: "light" // defaults to "light"
                     })
-                ]
+                ],
+                onReady: function(selectedDates, dateStr, instance){
+                    // $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    // $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
+
+        $(document).on('change','.datepicker,.datetimepicker,.daterangepicker,.timepicker,.monthpicker', (e)=>{ 
+            try {
+                let newdate = "";
+                let thisvalue = e.target.value;
+                if(thisvalue){
+                    if(thisvalue.indexOf('-') == 4 || thisvalue.indexOf('/') == 4){
+                        newdate = moment(thisvalue).format();
+                    }else if (thisvalue.indexOf('/') > -1) {
+                        newdate = moment(thisvalue,"DD/MM/YYYY hh:mm").format();
+                    }else{
+                        newdate = moment(thisvalue,"DD-MM-YYYY hh:mm").format()
+                    }
+                    e.target._flatpickr.setDate(new Date(newdate))
+                }else{
+                    e.target._flatpickr.setDate(thisvalue)
+                }
+            } catch (error) {
+            }            
+        });
 
         floatTheadReset()
 
@@ -178,27 +233,40 @@ var _helper = {
     updateInint(el) {
         el = el || 'body';
         $(el + ' .datepicker').each((index, item)=>{
+            flatpickr(item).destroy();
             flatpickr(item, {
                 locale: "th",
                 minDate:item.dataset.minDate ?? '',
                 maxDate:item.dataset.maxDate ?? '',
                 enableTime: false,
-                dateFormat: "d-m-Y"
+                dateFormat: "d-m-Y",
+                onReady: function(selectedDates, dateStr, instance){
+                    $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
         // # datetimepicker
         $(el + ' .datetimepicker').each((index, item)=>{
+            flatpickr(item).destroy();
             flatpickr(item, {
                 locale: "th",
                 minDate:item.dataset.minDate ?? '',
                 maxDate:item.dataset.maxDate ?? '',
                 enableTime: true,
                 dateFormat: "d-m-Y H:i",
-                time_24hr: true
+                time_24hr: true,
+                onReady: function(selectedDates, dateStr, instance){
+                    $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
         // # daterangepicker
         $(el + ' .daterangepicker').each((index, item)=>{
+            flatpickr(item).destroy();
             flatpickr(item, {
                 locale: "th",
                 mode: "range",
@@ -206,12 +274,18 @@ var _helper = {
                 maxDate:item.dataset.maxDate ?? '',
                 enableTime: false,
                 dateFormat: "d-m-Y",
-                time_24hr: true
+                time_24hr: true,
+                onReady: function(selectedDates, dateStr, instance){
+                    $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
 
             });
         })
         // # timepicker
         $(el + ' .timepicker').each((index, item)=>{
+            flatpickr(item).destroy();
             flatpickr(item, {
                 locale: "th",
                 enableTime: true,
@@ -219,12 +293,18 @@ var _helper = {
                 dateFormat: "H:i",
                 minTime: item.dataset.minTime,
                 maxTime: item.dataset.maxTime,
-                time_24hr: true
+                time_24hr: true,
+                onReady: function(selectedDates, dateStr, instance){
+                    $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
 
         // # monthpicker
         $(el + ' .monthpicker').each((index, item)=>{
+            flatpickr(item).destroy();
             flatpickr(item, {
                 locale: "th",
                 plugins: [
@@ -234,7 +314,12 @@ var _helper = {
                       altFormat: "F Y", //defaults to "F Y"
                       theme: "light" // defaults to "light"
                     })
-                ]
+                ],
+                onReady: function(selectedDates, dateStr, instance){
+                    $(`.flatpickr-calendar.init-${instance.input.id}`).remove();
+                    $(instance.calendarContainer).addClass(`init-${instance.input.id}`);
+                    $(instance.calendarContainer).append(genBtnClearAndToDay(instance.input.id));
+                }
             });
         })
 
@@ -322,6 +407,9 @@ var _helper = {
         inputFilterInit();
         signaturePadInit();
         setColorZero();
+
+        //reload validate
+        $.validator.unobtrusive.parse(el);
     },
     startLoading(el) {
         $(document).ready(function() {
@@ -610,20 +698,20 @@ function signaturePadInit() {
     $('canvas.signature-pad-canvase').each((index, el) => {
         let refid = $(el).attr('data-ref');
         signaturePad[refid] = new SignaturePad(el, {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            onBegin: function(event) {
-                $('button.signature-pad-clear[data-ref=' + refid + ']').off().click((e) => {
-                    let clearrefid = $(e.target).attr('data-ref');
-                    signaturePad[clearrefid].clear();
-                    $("#" + clearrefid).val("");
-                });
-            },
-            onEnd: function(event, ui) {
-                var dataURL = this.toDataURL();
-                signaturePadDefaultText(el);
-                $("#" + refid).val(dataURL);
-            }
+            backgroundColor: 'rgba(0, 0, 0, 0)'            
         });
+        signaturePad[refid].addEventListener("beginStroke", (e) => {
+            $('button.signature-pad-clear[data-ref=' + refid + ']').off().on("click",(e) => {
+                let clearrefid = $(e.target).attr('data-ref');
+                signaturePad[clearrefid].clear();
+                $("#" + clearrefid).val("");
+            });
+          });
+        signaturePad[refid].addEventListener("endStroke", (e) => {
+            var dataURL = signaturePad[refid].toDataURL();
+            signaturePadDefaultText(el);
+            $("#" + refid).val(dataURL);
+          });
         signaturePadDefaultText(el);
 
     });
@@ -808,7 +896,7 @@ function tooltipInit() {
                     url: encodeurl
                 }).then((response) => {
                     let custom_responseURL = response.request.responseURL
-                    if (custom_responseURL == encodeurl) {
+                    if (custom_responseURL.indexOf(encodeurl) > -1) {
                         let data = response.data;
                         $(el).html(data).ready(() => {
                             _helper.updateInint(targetName);

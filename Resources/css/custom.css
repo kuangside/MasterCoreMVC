@@ -115,6 +115,21 @@ body>div.ajax-loading {
 [class*=sidebar-dark] .nav-sidebar>.nav-item>.nav-treeview>.nav-item>.nav-link.active{
     border-left:2px solid #007bff;
 }
+.navbar-nav>.user-menu>.dropdown-menu>div>.user-header {
+    height: 175px;
+    padding: 10px;
+    text-align: center;
+}
+.navbar-nav>.user-menu>.dropdown-menu>div>.user-body {
+    border-bottom: 1px solid #495057;
+    border-top: 1px solid #dee2e6;
+    border-radius: 0px;
+    padding: 15px;
+}
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
 .nav-breadcrumb{
     padding: 0px 10px;
     background-color: #e9ecef;
@@ -201,6 +216,9 @@ body>div.ajax-loading {
     padding: 10px .75rem;
     z-index: 1030;
     background: #f4f6f9;
+}
+.text-sm .content-header {
+    padding: 10px .5rem 4px .5rem;
 }
 .content-wrapper {
     background-color: #F0F4F7
