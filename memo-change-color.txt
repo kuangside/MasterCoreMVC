@@ -1,0 +1,128 @@
+/* ============================================================================================= */
+	-- red
+	/* select * from tbdoc_process 
+	where doc_category in ('OneTime','Automatic') and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) > 0
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) < terminate_no +1 */
+
+	update tbdoc_process 
+	set contract_color = 'red'
+	where doc_category in ('OneTime','Automatic') and contract_status='Active' and ISNULL(contract_color,'') not in ('blue','red')
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) > 0
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) < terminate_no +1
+
+/* ============================================================================================= */
+
+	-- yellow
+	/* select * from tbdoc_process 
+	where doc_category in ('OneTime','Automatic') and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) >= terminate_no +1
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) < terminate_no +3 */
+
+	update tbdoc_process 
+	set contract_color = 'yellow'
+	where doc_category in ('OneTime','Automatic') and contract_status='Active' and ISNULL(contract_color,'') not in ('blue','yellow')
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) >= terminate_no +1
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) < terminate_no +3
+
+/* ============================================================================================= */
+
+	-- blue
+	/* select * from tbdoc_process 
+	where doc_category in ('OneTime','NoLimit') and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) <= 0 */
+
+	-- insert doc_answer
+	insert into tbdoc_answer
+	select NEWID() as id 
+		,id as [doc_process_id]
+		,CASE WHEN doc_category = 'OneTime' THEN 'Terminate' ELSE 'No-Active' END as [status]
+		,null as [company_approve_file]
+		,null as [create_by]
+		,getdate() as [create_date]
+		,null as [update_by]
+		,getdate() as [update_date]
+	from tbdoc_process 
+	where doc_category in ('OneTime','NoLimit') and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) <= 0
+
+	update tbdoc_process 
+	set contract_color = 'blue'
+	where doc_category in ('OneTime','NoLimit') and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) <= 0
+
+/* ============================================================================================= */
+	--OneTime
+	-- white
+	/* select * from tbdoc_process 
+	where doc_category = 'OneTime' and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) > terminate_no +3 */	
+
+	update tbdoc_process 
+	set contract_color = 'white'
+	where doc_category in ('OneTime','Automatic') and contract_status='Active' and ISNULL(contract_color,'') not in ('blue','white')
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) > terminate_no +3
+
+/* ============================================================================================= */
+
+	-- Automatic
+	-- white -- auto renewal
+	/* select * from tbdoc_process 
+	where doc_category = 'Automatic' and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) <= 0 */
+
+	insert into tbdoc_answer
+	select  NEWID() as id
+		,id as [doc_process_id]
+		,'Renewal' as [status]
+		,null as [company_approve_file]
+		,null as [create_by]
+		,getdate() as [create_date]
+		,null as [update_by]
+		,getdate() as [update_date]
+	from tbdoc_process 
+	where doc_category = 'Automatic' and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) <= 0
+
+	update tbdoc_process 
+	set contract_color = 'white'
+	, newstart_date = DATEADD(DAY,1,ISNULL(newend_date, end_date))
+	, newend_date = (
+		CASE 
+			WHEN renew_item = 'Day' THEN DATEADD(DAY,renew_no,ISNULL(newend_date, end_date))
+			WHEN renew_item = 'Month' THEN DATEADD(MONTH,renew_no,ISNULL(newend_date, end_date))
+			WHEN renew_item = 'Year' THEN DATEADD(YEAR,renew_no,ISNULL(newend_date, end_date))
+			ELSE DATEADD(MONTH,renew_no,ISNULL(newend_date, end_date))
+		END
+	)
+	where doc_category = 'Automatic' and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) <= 0
+
+/* ============================================================================================= */
+	-- NoLimit
+	-- white
+	/* select * from tbdoc_process 
+	where doc_category = 'NoLimit' and contract_status='Active' and ISNULL(contract_color,'') <> 'blue'
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) > 0 or end_date is null */
+
+	update tbdoc_process 
+	set contract_color = 'white'
+	where doc_category = 'NoLimit' and contract_status='Active' and ISNULL(contract_color,'') not in ('blue','white')
+	and DATEDIFF(MONTH, GETDATE(), ISNULL(newend_date,end_date)) > 0 or end_date is null
+
+
+	-- gray -- update to expired
+	/*select * from tbdoc_process 
+	where doc_category in ('OneTime','Automatic','NoLimit') and contract_status='Active' and ISNULL(contract_color,'') = 'blue'
+	and DATEDIFF(DAY, ISNULL(newend_date,end_date), GETDATE()) >= 14 */
+
+	update tbdoc_process 
+	set contract_color = 'gray' , contract_status = 'expired'
+	where doc_category in ('OneTime','Automatic','NoLimit') and contract_status='Active' and ISNULL(contract_color,'') = 'blue'
+	and DATEDIFF(DAY, ISNULL(newend_date,end_date), GETDATE()) >= 14
+
+
+	select * from tbdoc_process
+	select * from tbdoc_answer
+	--delete from tbdoc_answer
+	
